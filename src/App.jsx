@@ -4,8 +4,16 @@ import { useWeather } from "./hooks/useWeather";
 
 function App() {
   const [city, setCity] = useState("");
-  const { fetchWeather, fetchFutureWeather, data, futureData, loading, error } =
-    useWeather();
+  const {
+    fetchWeather,
+    fetchFutureWeather,
+    data,
+    futureData,
+    loading,
+    error,
+    futureError,
+    futureLoading,
+  } = useWeather();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,54 +48,63 @@ function App() {
       </form>
 
       {/* loading */}
-      {loading && <p className="text-gray-500">Loading...</p>}
+      {(loading || futureLoading) && (
+        <p className="text-gray-500">Loading...</p>
+      )}
 
       {/* error */}
       {error && <p className="text-red-500">{error}</p>}
 
-      {/* current weather */}
-      {data && data.current && (
-        <div className="bg-white shadow-md rounded-xl p-6 w-80 text-center mb-6">
-          <h2 className="text-2xl font-semibold mb-2 text-gray-800">
-            {data.location.name}, {data.location.country}
-          </h2>
-          <img
-            src={`https:${data.current.condition.icon}`}
-            alt={data.current.condition.text}
-            className="mx-auto"
-          />
-          <p className="text-3xl font-bold text-blue-600">
-            {data.current.temp_c}°C
-          </p>
-          <p className="text-gray-700">{data.current.condition.text}</p>
-          <p className="text-sm text-gray-500 mt-2">
-            Humidity: {data.current.humidity}% | Wind: {data.current.wind_kph}{" "}
-            km/h
-          </p>
-        </div>
-      )}
+      {/* futureError */}
+      {futureError && <p className="text-red-500">{futureError}</p>}
 
-      {/* future 3 days weather */}
-      {futureData && futureData.length > 1 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {futureData.slice(1).map((day, i) => (
-            <div
-              key={i}
-              className="bg-white shadow-sm rounded-lg p-4 w-60 text-center"
-            >
-              <p className="font-semibold text-gray-800 mb-1">{day.date}</p>
+      {!loading && !futureLoading && (
+        <>
+          {/* current weather */}
+          {data && data.current && (
+            <div className="bg-white shadow-md rounded-xl p-6 w-80 text-center mb-6">
+              <h2 className="text-2xl font-semibold mb-2 text-gray-800">
+                {data.location.name}, {data.location.country}
+              </h2>
               <img
-                src={`https:${day.day.condition.icon}`}
-                alt={day.day.condition.text}
+                src={`https:${data.current.condition.icon}`}
+                alt={data.current.condition.text}
                 className="mx-auto"
               />
-              <p className="text-gray-700">{day.day.condition.text}</p>
-              <p className="text-blue-600 font-bold">
-                {day.day.maxtemp_c}° / {day.day.mintemp_c}°
+              <p className="text-3xl font-bold text-blue-600">
+                {data.current.temp_c}°C
+              </p>
+              <p className="text-gray-700">{data.current.condition.text}</p>
+              <p className="text-sm text-gray-500 mt-2">
+                Humidity: {data.current.humidity}% | Wind:{" "}
+                {data.current.wind_kph} km/h
               </p>
             </div>
-          ))}
-        </div>
+          )}
+
+          {/* future 3 days weather */}
+          {futureData && futureData.length > 1 && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {futureData.slice(1).map((day, i) => (
+                <div
+                  key={i}
+                  className="bg-white shadow-sm rounded-lg p-4 w-60 text-center"
+                >
+                  <p className="font-semibold text-gray-800 mb-1">{day.date}</p>
+                  <img
+                    src={`https:${day.day.condition.icon}`}
+                    alt={day.day.condition.text}
+                    className="mx-auto"
+                  />
+                  <p className="text-gray-700">{day.day.condition.text}</p>
+                  <p className="text-blue-600 font-bold">
+                    {day.day.maxtemp_c}° / {day.day.mintemp_c}°
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
