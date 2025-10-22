@@ -36,58 +36,68 @@ function App() {
         {/* The searching section */}
         {!isLoading && !data && !error && !futureError && (
           <>
-            <form
-              onSubmit={handleSubmit}
-              className="flex space-x-2 mb-8 justify-center"
-            >
-              <input
-                type="text"
-                placeholder="Enter city..."
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className="border border-gray-300 rounded-lg px-4 py-2 w-56 focus:outline-none focus:ring-2 focus:ring-sky-400"
-              />
-              <button
-                type="submit"
-                className="bg-sky-500 text-white px-5 py-2 rounded-lg hover:bg-sky-600 transition"
+            <div className="flex flex-col items-center space-y-6">
+              {/* Search Box */}
+              <form
+                onSubmit={handleSubmit}
+                className="flex items-center bg-white shadow-md rounded-full px-4 py-2 w-[340px] sm:w-[400px] focus-within:ring-2 focus-within:ring-sky-400 transition"
               >
-                Search
-              </button>
-            </form>
+                <input
+                  type="text"
+                  placeholder="🔍  Enter city name..."
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className="flex-grow text-gray-700 px-3 py-2 rounded-full focus:outline-none placeholder-gray-400"
+                />
+                <button
+                  type="submit"
+                  className="bg-sky-500 text-white font-medium px-5 py-2 rounded-full hover:bg-sky-600 transition disabled:opacity-50"
+                  disabled={!city.trim()}
+                >
+                  Search
+                </button>
+              </form>
 
-            {/* Initial state */}
-            <p className="text-gray-600 text-center text-lg">
-              🔍 Search for a city to view weather information.
-            </p>
+              {/* Tip / Initial State */}
+              <div className="bg-white/80 backdrop-blur-sm border border-sky-100 rounded-xl px-6 py-4 shadow-sm text-center">
+                <p className="text-gray-600 text-lg">
+                  Type a city name to explore its current and future weather.
+                </p>
+              </div>
+            </div>
           </>
         )}
 
         {/* ⚠️ Error */}
         {!isLoading && (error || futureError) && (
           <>
-            <form
-              onSubmit={handleSubmit}
-              className="flex space-x-2 mb-8 justify-center"
-            >
-              <input
-                type="text"
-                placeholder="Enter city..."
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className="border border-gray-300 rounded-lg px-4 py-2 w-56 focus:outline-none focus:ring-2 focus:ring-sky-400"
-              />
-              <button
-                type="submit"
-                className="bg-sky-500 text-white px-5 py-2 rounded-lg hover:bg-sky-600 transition"
+            <div className="flex flex-col items-center space-y-6">
+              {/* Search Box */}
+              <form
+                onSubmit={handleSubmit}
+                className="flex items-center bg-white shadow-md rounded-full px-4 py-2 w-[340px] sm:w-[400px] focus-within:ring-2 focus-within:ring-sky-400 transition-all duration-200"
               >
-                Search
-              </button>
-            </form>
+                <input
+                  type="text"
+                  placeholder="🔍  Enter city name..."
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className="flex-grow text-gray-700 px-3 py-2 rounded-full focus:outline-none placeholder-gray-400"
+                />
+                <button
+                  type="submit"
+                  className="bg-sky-500 text-white font-medium px-5 py-2 rounded-full hover:bg-sky-600 transition disabled:opacity-50"
+                  disabled={!city.trim()}
+                >
+                  Search
+                </button>
+              </form>
 
-            {/* error state */}
-            <p className="text-gray-600 text-center text-lg">
-              Invalid city name. Please try again.
-            </p>
+              {/* Error Message */}
+              <div className="bg-red-50 border border-red-200 text-red-600 px-5 py-3 rounded-xl shadow-sm text-center animate-fadeIn">
+                Invalid city name. Please try again.
+              </div>
+            </div>
           </>
         )}
 
@@ -121,7 +131,8 @@ function App() {
                     {data.current.condition.text}
                   </p>
                   <p className="text-sm text-gray-500 mt-2">
-                    💧 {data.current.humidity}% | 🌬 {data.current.wind_kph} km/h
+                    Humidity: {data.current.humidity}% | Wind:
+                    {data.current.wind_kph} km/h
                   </p>
                 </div>
 
@@ -131,10 +142,10 @@ function App() {
                   {futureData.slice(0, 4).map((day, i) => (
                     <div
                       key={i}
-                      className="bg-gradient-to-b from-sky-50 to-sky-100 rounded-xl shadow-inner text-center p-4 hover:shadow-md transition flex flex-col justify-between min-h-[160px]"
+                      className="bg-linear-to-b from-sky-50 to-sky-100 rounded-xl shadow-inner text-center p-4 hover:shadow-md transition flex flex-col justify-between min-h-[160px]"
                     >
                       <p className="font-semibold text-gray-700 mb-1 truncate">
-                        {day.date}
+                        {i == 0 ? "Today" : day.date}
                       </p>
                       <img
                         src={`https:${day.day.condition.icon}`}
