@@ -4,6 +4,7 @@ export function useWeather() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [futureData, setFutureData] = useState(null);
 
   const fetchWeather = async (city) => {
     try {
@@ -15,7 +16,6 @@ export function useWeather() {
         }&q=${city}`
       );
       const result = await res.json();
-      console.log(result.current);
       setData(result);
     } catch (error) {
       console.log("fetch weather error:", error);
@@ -25,5 +25,23 @@ export function useWeather() {
     }
   };
 
-  return { fetchWeather, data, loading, error };
+  const fetchFutureWeather = async (city) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/forecast.json?key=${
+          import.meta.env.VITE_WEATHER_KEY
+        }&Q=${city}&days=4`
+      );
+      const result = await res.json();
+      setFutureData(result.forecast.forecastday);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { fetchWeather, data, loading, error, fetchFutureWeather, futureData };
 }
