@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center font-sans bg-linear-to-b from-sky-100 via-sky-200 to-sky-300">
-      {/* 🌤 Weather Card */}
+      {/* Weather Card */}
       <div className="bg-white/80 backdrop-blur-md shadow-xl rounded-3xl p-8 w-full max-w-3xl min-h-[520px] flex flex-col items-center justify-center transition-transform hover:scale-[1.01]">
         {/* The searching section */}
         {!isLoading && !data && !error && !futureError && (
@@ -44,10 +44,10 @@ function App() {
               >
                 <input
                   type="text"
-                  placeholder="🔍  Enter city name..."
+                  placeholder="Enter city name..."
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="flex-grow text-gray-700 px-3 py-2 rounded-full focus:outline-none placeholder-gray-400"
+                  className="grow text-gray-700 px-3 py-2 rounded-full focus:outline-none placeholder-gray-400"
                 />
                 <button
                   type="submit"
@@ -68,7 +68,7 @@ function App() {
           </>
         )}
 
-        {/* ⚠️ Error */}
+        {/* Error */}
         {!isLoading && (error || futureError) && (
           <>
             <div className="flex flex-col items-center space-y-6">
@@ -82,7 +82,7 @@ function App() {
                   placeholder="🔍  Enter city name..."
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="flex-grow text-gray-700 px-3 py-2 rounded-full focus:outline-none placeholder-gray-400"
+                  className="grow text-gray-700 px-3 py-2 rounded-full focus:outline-none placeholder-gray-400"
                 />
                 <button
                   type="submit"
@@ -111,7 +111,7 @@ function App() {
               </p>
             )}
 
-            {/* 🌤 Display weather data */}
+            {/* Display weather data */}
             {!isLoading && hasWeather && (
               <>
                 {/* Today's weather */}
@@ -137,7 +137,7 @@ function App() {
                 </div>
 
                 {/* Future 4-day forecast */}
-                {/* 💡 Keep all 4 cards on one line */}
+                {/* Keep all 4 cards on one line */}
                 <div className="grid grid-cols-4 gap-4 w-full overflow-x-auto">
                   {futureData.slice(0, 4).map((day, i) => (
                     <div
