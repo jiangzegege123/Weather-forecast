@@ -37,6 +37,10 @@ function App() {
         {!isLoading && !data && !error && !futureError && (
           <>
             <div className="flex flex-col items-center space-y-6">
+              {/* Titie */}
+              <h1 className="text-4xl font-bold text-sky-700 tracking-tight drop-shadow-sm">
+                Weather Forecast
+              </h1>
               {/* Search Box */}
               <form
                 onSubmit={handleSubmit}
@@ -57,13 +61,11 @@ function App() {
                   Search
                 </button>
               </form>
-
               {/* Tip / Initial State */}
-              <div className="bg-white/80 backdrop-blur-sm border border-sky-100 rounded-xl px-6 py-4 shadow-sm text-center">
-                <p className="text-gray-600 text-lg">
-                  Type a city name to explore its current and future weather.
-                </p>
-              </div>
+
+              <p className="text-gray-600 text-lg">
+                Type a city name to explore its current and future weather.
+              </p>
             </div>
           </>
         )}
@@ -72,14 +74,18 @@ function App() {
         {!isLoading && (error || futureError) && (
           <>
             <div className="flex flex-col items-center space-y-6">
+              {/* Titie */}
+              <h1 className="text-4xl font-bold text-sky-700 tracking-tight drop-shadow-sm">
+                Weather Forecast
+              </h1>
               {/* Search Box */}
               <form
                 onSubmit={handleSubmit}
-                className="flex items-center bg-white shadow-md rounded-full px-4 py-2 w-[340px] sm:w-[400px] focus-within:ring-2 focus-within:ring-sky-400 transition-all duration-200"
+                className="flex items-center bg-white shadow-md rounded-full px-4 py-2 w-[340px] sm:w-[400px] focus-within:ring-2 focus-within:ring-sky-400 transition"
               >
                 <input
                   type="text"
-                  placeholder="🔍  Enter city name..."
+                  placeholder="Enter city name..."
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   className="grow text-gray-700 px-3 py-2 rounded-full focus:outline-none placeholder-gray-400"
