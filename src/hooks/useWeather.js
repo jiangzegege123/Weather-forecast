@@ -55,5 +55,7 @@ export function useWeather() {
     futureData,
     futureLoading,
     futureError,
+    setData,
+    setFutureData,
   };
 }
